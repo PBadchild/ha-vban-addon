@@ -1,0 +1,22 @@
+{{
+  "name": "VBAN Emitter",
+  "version": "0.1.0",
+  "slug": "vban_emitter",
+  "description": "Streams audio from Home Assistant to VoiceMeeter via VBAN.",
+  "arch": ["aarch64", "amd64", "armhf", "armv7", "i386"],
+  "startup": "application",
+  "boot": "auto",
+  "url": "https://github.com/YOUR_GITHUB_USERNAME/ha-vban-addon",
+  "options": {
+    "VOICEMEETER_IP": "",
+    "VBAN_PORT": 6980,
+    "VBAN_STREAM_NAME": "music_assistant"
+  },
+  "schema": {
+    "VOICEMEETER_IP": "str",
+    "VBAN_PORT": "int",
+    "VBAN_STREAM_NAME": "str"
+  },
+  "audio": true,
+  "host_network": true
+}
