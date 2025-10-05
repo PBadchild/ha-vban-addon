@@ -1,22 +1,41 @@
-{{
+{
   "name": "VBAN Emitter",
   "version": "0.1.0",
   "slug": "vban_emitter",
   "description": "Streams audio from Home Assistant to VoiceMeeter via VBAN.",
-  "arch": ["aarch64", "amd64", "armhf", "armv7", "i386"],
+  "url": "https://github.com/PBadchild/ha-vban-addon2/tree/main/vban_emitter",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "startup": "application",
   "boot": "auto",
-  "url": "https://github.com/YOUR_GITHUB_USERNAME/ha-vban-addon",
-  "options": {
-    "VOICEMEETER_IP": "",
-    "VBAN_PORT": 6980,
-    "VBAN_STREAM_NAME": "music_assistant"
+  "hassio_role": "default",
+  "map": ["udp://core-vban-emitter:6980"],
+  "ports": {
+    "6980/udp": "VBAN Audio Stream"
   },
   "schema": {
-    "VOICEMEETER_IP": "str",
-    "VBAN_PORT": "int",
-    "VBAN_STREAM_NAME": "str"
+    "VOICEMEETER_IP": {
+      "title": "VoiceMeeter IP Address",
+      "description": "IP of your VoiceMeeter PC (e.g., 192.168.1.100)",
+      "type": "str",
+      "default": "127.0.0.1"
+    },
+    "VBAN_PORT": {
+      "title": "VBAN UDP Port",
+      "description": "Port for VBAN audio stream",
+      "type": "int",
+      "default": 6980
+    },
+    "VBAN_STREAM_NAME": {
+      "title": "VBAN Stream Name",
+      "description": "Name for the stream in VoiceMeeter (e.g., 'music_assistant')",
+      "type": "str",
+      "default": "music_assistant"
+    }
   },
+  "full_time": false,
+  "privileged": false,
+  "host_network": true,
   "audio": true,
-  "host_network": true
+  "image": "ghcr.io/pbadchild/ha-vban-emitter{arch}",
+  "devices": []
 }
