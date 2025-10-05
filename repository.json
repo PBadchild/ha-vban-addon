@@ -1,13 +1,13 @@
 {
   "name": "PBadchild's VBAN Add-ons",
-  "url": "https://github.com/PBadchild/ha-vban-addon2",
+  "url": "https://github.com/PBadchild/ha-vban-addon",
   "maintainer": "Your Name <p.badchild@gmail.com>",
   "addons": [
     {
       "slug": "vban_emitter",
       "name": "VBAN Emitter",
       "description": "Streams audio from Home Assistant to VoiceMeeter via VBAN.",
-      "repository": "https://github.com/PBadchild/ha-vban-addon2"
+      "repository": "https://github.com/PBadchild/ha-vban-addon"
     }
   ]
 }
