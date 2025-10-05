@@ -4,10 +4,10 @@
   "maintainer": "Your Name <p.badchild@gmail.com>",
   "addons": [
     {
+      "slug": "vban_emitter",
       "name": "VBAN Emitter",
-      "url": "https://github.com/PBadchild/ha-vban-addon2",
       "description": "Streams audio from Home Assistant to VoiceMeeter via VBAN.",
-      "target": "vban_emitter" // <--- CRITICAL: This MUST match the folder name
+      "repository": "https://github.com/PBadchild/ha-vban-addon2"
     }
   ]
 }
