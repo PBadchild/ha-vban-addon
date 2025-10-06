@@ -1,0 +1,3 @@
+[submodule "vban_emitter/vban_source"]
+	path = vban_emitter/vban_source
+	url = https://github.com/quiniouben/vban.git
