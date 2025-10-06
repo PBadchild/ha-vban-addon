@@ -7,10 +7,7 @@
       "slug": "vban_emitter",
       "name": "VBAN Emitter",
       "description": "Streams audio from Home Assistant to VoiceMeeter via VBAN.",
-      "version": "0.1.0",  
-      "url": "https://github.com/PBadchild/ha-vban-addon/tree/main/vban_emitter",  
-      "arch": ["amd64", "armhf", "aarch64"], 
-      "repository": "https://github.com/PBadchild/ha-vban-addon"
+      "version": "0.1.0"
     }
   ]
 }
