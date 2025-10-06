@@ -17,14 +17,17 @@ echo "VBAN Stream Name: ${VBAN_STREAM_NAME}"
 echo "VoiceMeeter IP: ${VOICEMEETER_IP}"
 echo "VBAN Port: ${VBAN_PORT}"
 
+# Check if vban_emitter is installed
+if [ ! -x "/usr/bin/vban_emitter" ]; then
+    echo "Error: vban_emitter binary not built/installed. Check Dockerfile build logs."
+    exit 1
+fi
+
 # Function to stream audio (capture from HA via ffmpeg + pipe to vban_emitter)
 stream_audio() {
-    if [ ! -x "/usr/bin/vban_emitter" ]; then
-        echo "Error: vban_emitter binary not found. Please provide it or build it."
-        exit 1
-    fi
-    ffmpeg -f alsa -i hw:0 \  # Adapt for HA environment (e.g., pulse if needed)
-           -f mulaw -ar 48000 -ac 2 - \
+    # Use ALSA for capture; switch to Pulse if needed: -f pulse -i default
+    ffmpeg -f alsa -i hw:0 \  # HA audio input (adapt for Music Assistant output)
+           -f mulaw -ar 48000 -ac 2 - \  # VBAN format: u-law, 48kHz stereo
            | /usr/bin/vban_emitter -i "$VOICEMEETER_IP" -p "$VBAN_PORT" -s "$VBAN_STREAM_NAME"
 }
 
