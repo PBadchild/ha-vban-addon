@@ -19,10 +19,12 @@ echo "VBAN Port: ${VBAN_PORT}"
 
 # Function to stream audio (capture from HA via ffmpeg + pipe to vban_emitter)
 stream_audio() {
-    # Replace 'hw:0' with your HA audio device (e.g., ALSA card for Music Assistant)
-    # For testing: Use sine wave; for real: Capture from media_player entity via pipe
-    ffmpeg -f alsa -i hw:0 \  # HA audio input (adapt: pulse for PulseAudio)
-           -f mulaw -ar 48000 -ac 2 - \  # VBAN format: u-law, 48kHz stereo
+    if [ ! -x "/usr/bin/vban_emitter" ]; then
+        echo "Error: vban_emitter binary not found. Please provide it or build it."
+        exit 1
+    fi
+    ffmpeg -f alsa -i hw:0 \  # Adapt for HA environment (e.g., pulse if needed)
+           -f mulaw -ar 48000 -ac 2 - \
            | /usr/bin/vban_emitter -i "$VOICEMEETER_IP" -p "$VBAN_PORT" -s "$VBAN_STREAM_NAME"
 }
 

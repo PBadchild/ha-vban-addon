@@ -3,37 +3,27 @@ FROM ${BUILD_FROM}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install dependencies for building vban_emitter
+# Install dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
         libasound2-dev \
         git \
+        ffmpeg \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-# Copy the vban source from the addon directory into the container
-COPY . /tmp/vban
-
-# Build and install vban_emitter
-WORKDIR /tmp/vban
-RUN ./autogen.sh \
-    && ./configure --prefix=/usr --enable-alsa --disable-pulseaudio --disable-jack \
-    && make \
-    && make install
-
-# Clean up build directory
-RUN rm -rf /tmp/vban
-
-# Copy and set permissions for run script
+# Copy run script and placeholder for vban_emitter (replace with binary if available)
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
-# Set working directory to root
+# If you have a vban_emitter binary, copy it (e.g., COPY vban_emitter /usr/bin/vban_emitter)
+# Otherwise, this will fail until you provide the binary or source
+# WORKDIR /tmp/vban  # Remove if no source build
+# COPY . /tmp/vban   # Remove if no source build
+# RUN ./autogen.sh && ./configure --prefix=/usr --enable-alsa --disable-pulseaudio --disable-jack && make && make install
+# RUN rm -rf /tmp/vban  # Remove if no source build
+
 WORKDIR /
-
-# Expose VBAN UDP port (optional, as config.json maps it)
-EXPOSE 6980/udp
-
-# Run the emitter
+EXPOSE 6980/udp  # Optional, remove if redundant with config.json
 CMD ["/run.sh"]
