@@ -23,12 +23,15 @@ if [ ! -x "/usr/bin/vban_emitter" ]; then
     exit 1
 fi
 
-# Function to stream audio (capture from HA via ffmpeg + pipe to vban_emitter)
+# Function to stream audio (wait for temp file from HA)
 stream_audio() {
-    # Use ALSA for capture; switch to Pulse if needed: -f pulse -i default
-    ffmpeg -f alsa -i hw:0 \  # HA audio input (adapt for Music Assistant output)
-           -f mulaw -ar 48000 -ac 2 - \  # VBAN format: u-law, 48kHz stereo
-           | /usr/bin/vban_emitter -i "$VOICEMEETER_IP" -p "$VBAN_PORT" -s "$VBAN_STREAM_NAME"
+    temp_file="/tmp/audio.raw"
+    while [ ! -f "$temp_file" ]; do
+        echo "Waiting for audio file from HA..."
+        sleep 1
+    done
+    /usr/bin/vban_emitter -i "$VOICEMEETER_IP" -p "$VBAN_PORT" -s "$VBAN_STREAM_NAME" "$temp_file"
+    rm -f "$temp_file"
 }
 
 # Main loop: Retry on failure to keep add-on alive

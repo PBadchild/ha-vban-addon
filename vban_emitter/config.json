@@ -5,10 +5,10 @@
   "description": "Streams audio from Home Assistant to VoiceMeeter via VBAN.",
   "url": "https://github.com/PBadchild/ha-vban-addon/tree/main/vban_emitter",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
-  "startup": "application",
+  "startup": "services",
   "boot": "auto",
   "hassio_role": "default",
-  "map": ["6980/udp"],
+  "map": ["/tmp"],
   "ports": {
     "6980/udp": "VBAN Audio Stream"
   },
