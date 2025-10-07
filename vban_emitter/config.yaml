@@ -15,33 +15,18 @@ hassio_role: default
 map:
   - "/tmp:rw"
 ports:
-  6980/udp: VBAN Audio Stream
+  6980/udp: null
 options:
   VOICEMEETER_IP: 127.0.0.1
   VBAN_PORT: 6980
   VBAN_STREAM_NAME: music_assistant
 schema:
-  VOICEMEETER_IP:
-    name: VoiceMeeter IP Address
-    description: IP of your VoiceMeeter PC (e.g., 192.168.1.100)
-    required: true
-    type: string
-    default: 127.0.0.1
-  VBAN_PORT:
-    name: VBAN UDP Port
-    description: Port for VBAN audio stream
-    required: true
-    type: integer
-    default: 6980
-  VBAN_STREAM_NAME:
-    name: VBAN Stream Name
-    description: Name for the stream in VoiceMeeter (e.g., 'music_assistant')
-    required: true
-    type: string
-    default: music_assistant
+  VOICEMEETER_IP: str
+  VBAN_PORT: int
+  VBAN_STREAM_NAME: str
 full_time: false
 privileged: false
 host_network: true
 audio: true
 devices: []
-stage: manual
+stage: experimental
